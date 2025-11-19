@@ -1,5 +1,4 @@
-
-   BASE DE DATOS GameStoreAPI
+BASE DE DATOS GameStoreAPI
 
    TABLA: Clientes
 
@@ -56,7 +55,6 @@ CREATE TABLE Ordenes (
 
 
    TABLA: Detalle_Orden  Relación N:M -> Ordenes ⇄ Inventario
-
 
 CREATE TABLE Detalle_Orden (
     id INT IDENTITY(1,1) PRIMARY KEY,
