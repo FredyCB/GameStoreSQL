@@ -1,0 +1,32 @@
+GameStore API CRUD SQL Scripts
+
+-- Clientes
+INSERT INTO Clientes (nombre, email, telefono) VALUES ('Juan Pérez', 'juan@example.com', '9999-9999');
+SELECT * FROM Clientes;
+SELECT * FROM Clientes WHERE id = 1;
+UPDATE Clientes SET nombre='Nuevo Nombre', email='nuevo@mail.com' WHERE id = 1;
+DELETE FROM Clientes WHERE id = 1;
+
+-- Inventario
+INSERT INTO Inventario (nombre, precio, stock, ubicacion) VALUES ('God of War Ragnarok', 59.99, 10, 'Estante A');
+SELECT * FROM Inventario;
+SELECT * FROM Inventario WHERE id = 1;
+UPDATE Inventario SET nombre='Nuevo Nombre', precio=49.99, stock=20, ubicacion='Bodega' WHERE id = 1;
+DELETE FROM Inventario WHERE id = 1;
+
+-- Juegos
+SELECT * FROM Juegos;
+SELECT * FROM Juegos WHERE nombre LIKE '%War%';
+DELETE FROM Juegos WHERE id = 1;
+
+-- Ordenes
+INSERT INTO Ordenes (cliente_id, cliente_nombre, total, estado) VALUES (1, 'Juan Pérez', 0, 'Pendiente');
+SELECT * FROM Ordenes;
+SELECT * FROM Ordenes WHERE id = 1;
+DELETE FROM Ordenes WHERE id = 1;
+
+-- Detalle_Orden
+INSERT INTO Detalle_Orden (orden_id, inventario_id, nombre_inventario, cantidad, precio_unitario) 
+VALUES (1, 3, 'God of War', 1, 59.99);
+SELECT * FROM Detalle_Orden WHERE orden_id = 1;
+DELETE FROM Detalle_Orden WHERE id = 5;
