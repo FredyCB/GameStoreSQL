@@ -1,0 +1,74 @@
+
+   BASE DE DATOS GameStoreAPI
+
+   TABLA: Clientes
+
+CREATE TABLE Clientes (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nombre VARCHAR(200) NOT NULL,
+    email VARCHAR(200) NOT NULL UNIQUE,
+    telefono VARCHAR(20),
+    fecha_registro DATETIME DEFAULT(GETDATE())
+);
+
+
+   TABLA: Inventario
+
+CREATE TABLE Inventario (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nombre VARCHAR(200) NOT NULL UNIQUE,
+    precio DECIMAL(10,2) NOT NULL DEFAULT(0),
+    stock INT NOT NULL DEFAULT(0),
+    ubicacion VARCHAR(200),
+    fecha_actualizacion DATETIME DEFAULT(GETDATE())
+);
+
+
+   TABLA: Juegos -> Catálogo generado desde Inventario
+
+CREATE TABLE Juegos (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    inventario_id INT NOT NULL UNIQUE,  -- 1 registro por Inventario
+    nombre VARCHAR(200) NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    descripcion VARCHAR(1000),
+
+    CONSTRAINT FK_Juegos_Inventario
+        FOREIGN KEY (inventario_id) REFERENCES Inventario(id)
+        ON DELETE CASCADE
+);
+
+
+   TABLA: Ordenes
+
+CREATE TABLE Ordenes (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    cliente_id INT NOT NULL,
+    cliente_nombre VARCHAR(200) NOT NULL,
+    fecha_orden DATETIME DEFAULT(GETDATE()),
+    total DECIMAL(10,2) NOT NULL DEFAULT(0),
+    estado VARCHAR(20) NOT NULL DEFAULT('Pendiente'),
+
+    CONSTRAINT FK_Ordenes_Clientes
+        FOREIGN KEY (cliente_id)
+        REFERENCES Clientes(id)
+);
+
+
+   TABLA: Detalle_Orden  Relación N:M -> Ordenes ⇄ Inventario
+
+
+CREATE TABLE Detalle_Orden (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    orden_id INT NOT NULL,
+    inventario_id INT NOT NULL,
+    nombre_inventario VARCHAR(200) NOT NULL,
+    cantidad INT NOT NULL DEFAULT(1),
+    precio_unitario DECIMAL(10,2) NOT NULL,
+
+CONSTRAINT FK_DetalleOrden_Ordenes
+FOREIGN KEY (orden_id) REFERENCES Ordenes(id) ON DELETE CASCADE,
+
+CONSTRAINT FK_DetalleOrden_Inventario  
+FOREIGN KEY (inventario_id) REFERENCES Inventario(id)
+);
