@@ -56,17 +56,14 @@ CREATE TABLE Ordenes (
 
    TABLA: Detalle_Orden  Relación N:M -> Ordenes ⇄ Inventario
 
-CREATE TABLE Detalle_Orden (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    orden_id INT NOT NULL,
-    inventario_id INT NOT NULL,
-    nombre_inventario VARCHAR(200) NOT NULL,
-    cantidad INT NOT NULL DEFAULT(1),
-    precio_unitario DECIMAL(10,2) NOT NULL,
-
-CONSTRAINT FK_DetalleOrden_Ordenes
-FOREIGN KEY (orden_id) REFERENCES Ordenes(id) ON DELETE CASCADE,
-
-CONSTRAINT FK_DetalleOrden_Inventario  
-FOREIGN KEY (inventario_id) REFERENCES Inventario(id)
+CREATE TABLE [dbo].[Detalle_Orden] (
+    [id]                INT             IDENTITY (1, 1) NOT NULL,
+    [orden_id]          INT             NOT NULL,
+    [inventario_id]     INT             NOT NULL,
+    [nombre_inventario] VARCHAR (200)   NOT NULL,
+    [cantidad]          INT             NOT NULL,
+    [precio_unitario]   DECIMAL (10, 2) NOT NULL,
+    PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_Detalle_Orden_Inventario] FOREIGN KEY ([inventario_id]) REFERENCES [dbo].[Inventario] ([id]),
+    CONSTRAINT [FK_Detalle_Orden_Ordenes] FOREIGN KEY ([orden_id]) REFERENCES [dbo].[Ordenes] ([id]) ON DELETE CASCADE
 );
